@@ -1716,7 +1716,7 @@ cparse_def(cclass_t * class, src_t * src, scan_t * scan, tok_t * next) {
   if (parse_test(&tok, EXTENDS)) {
     parse_match(scan, TERM);
     src->super = parse_term(scan, ID);
-    parse_term(scan, LBLOCK);
+    parse_match(scan, LBLOCK);
   } else {
     tok_t * cls = &src->class;
     if (cls->len != STRLEN(basename) ||
@@ -1724,28 +1724,35 @@ cparse_def(cclass_t * class, src_t * src, scan_t * scan, tok_t * next) {
       src->super = baseclass;
     }
     parse_check(&tok, LBLOCK);
-    parse_match(scan, TERM);
   }
-  parse_term(scan, STRUCT);
-  parse_match(scan, LBLOCK);
-  size_t level = 1;
-  scan->states = scan_cstates;
   tok = parse_next(scan);
-  tok_new(&src->strukt);
-  tok_add(&src->strukt, &tok);
-  while (1) {
-    if (parse_test(&tok, LBLOCK)) {
-      level++;
-    } else if (parse_test(&tok, RBLOCK)) {
-      level--;
-    }
-    if (level == 0) break;
-    tok_add(&src->strukt, &tok);
+  if (parse_test(&tok, TERM)) {
     tok = parse_next(scan);
   }
-  scan->states = scan_states;
-  parse_match(scan, TERM);
-  tok = parse_next(scan);
+  if (parse_test(&tok, STRUCT)) {
+    parse_match(scan, TERM);
+    parse_match(scan, LBLOCK);
+    size_t level = 1;
+    scan->states = scan_cstates;
+    tok = parse_next(scan);
+    tok_new(&src->strukt);
+    tok_add(&src->strukt, &tok);
+    while (1) {
+      if (parse_test(&tok, LBLOCK)) {
+        level++;
+      } else if (parse_test(&tok, RBLOCK)) {
+        level--;
+      }
+      if (level == 0) break;
+      tok_add(&src->strukt, &tok);
+      tok = parse_next(scan);
+    }
+    scan->states = scan_states;
+    parse_match(scan, TERM);
+    tok = parse_next(scan);
+  } else if (parse_test(&tok, TERM)) {
+    tok = parse_next(scan);
+  }
   if (parse_test(&tok, CLASS)) {
     parse_match(scan, TERM);
     parse_match(scan, LBLOCK);
