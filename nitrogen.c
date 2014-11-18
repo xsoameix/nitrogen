@@ -567,66 +567,68 @@ typedef enum {
   CCALL,     // 2  [middle dot][a-zA-Z_][a-zA-Z_1-9]*
   CTCLASS,   // 3  [middle dot][middle dot]
   CSTCALL,   // 4  [low grave accent][a-zA-Z_][a-zA-Z_1-9]
-  CMACRO,    // 5  : [A-Z]
-  CREQUIRE,  // 6  : require
-  CCLASS,    // 7  : class
-  CEND,      // 8  : end
-  CTYPEDEF,  // 9  : end
-  CMETHOD,   //10  : [a-zA-Z_][a-zA-Z_1-9]*
-  CDMETHOD,  //11  : [a-zA-Z_][a-zA-Z_1-9]*
-  CINSTANCE, //12  @ [a-zA-Z_][a-zA-Z_1-9]*
-  CSELF,     //13  self
-  CSUPER,    //14  super
-  CSTATIC,   //15  static
-  CID,       //16  [a-zA-Z_][a-zA-Z_1-9]*
-  CLPARE,    //17  (
-  CRPARE,    //18  )
-  CLBRACE,   //19  {
-  CRBRACE,   //20  }
-  CQUOTE,    //21  "
-  CBSLASH,   //22  [back slash]
-  CBQUOTE,   //23  [back slash]"
-  CSLASH,    //24  /
-  CCATLINE,  //25  /0x0A
-  CMUL,      //26  *
-  CCOM,      //27  //
-  CCOMS_BEG, //28  /[mul]
-  CCOMS_END, //29  [mul]/
-  CNSIGN,    //30  #
-  CDECLEND,  //31  ;
-  CVBR,      //32  |
-  CDOT,      //33  .
-  CSPACE,    //34  [space]
-  CTERM,     //35  0x0A
-  CSUCALL,   //36  super call, eg. super(), used in parsing, not scan,
-  CSUMCALL,  //37  super method call, eg. super[middle dot]foo()
-  CSEMCALL,  //38  self method call, eg. [middle dot]foo()
-  CIDMCALL,  //39  id method call, eg. bar[middle dot]foo()
-  CSIDMCALL, //40  self id method call, eg. @bar[middle dot]foo()
-  CSTMCALL,  //41  static id method call, eg. bar[low grave accent]foo()
-  CSSTMCALL, //42  self static id method call, eg. @bar[bow grave accent]foo()
-  CFREQUIRE, //43  require file name, eg. require "abc.c"
-  CCMETHOD,  //44  class method, eg. void : abc(int x) { }
-  CSUCCALL,  //45  super class call, eg. void : abc(int x) { super(x) }
-  CSUCMCALL, //46  super class method call, eg.
+  CDEFMAC,   // 5  : [A-Z]
+  CMACRO,    // 6  : [A-Z]
+  CREQUIRE,  // 7  : require
+  CCLASS,    // 8  : class
+  CEND,      // 9  : end
+  CTYPEDEF,  //10  : end
+  CMETHOD,   //11  : [a-zA-Z_][a-zA-Z_1-9]*
+  CDMETHOD,  //12  : [a-zA-Z_][a-zA-Z_1-9]*
+  CINSTANCE, //13  @ [a-zA-Z_][a-zA-Z_1-9]*
+  CYIELD,    //14  yield
+  CSELF,     //15  self
+  CSUPER,    //16  super
+  CSTATIC,   //17  static
+  CID,       //18  [a-zA-Z_][a-zA-Z_1-9]*
+  CLPARE,    //19  (
+  CRPARE,    //20  )
+  CLBRACE,   //21  {
+  CRBRACE,   //22  }
+  CQUOTE,    //23  "
+  CBSLASH,   //24  [back slash]
+  CBQUOTE,   //25  [back slash]"
+  CSLASH,    //26  /
+  CCATLINE,  //27  /0x0A
+  CMUL,      //28  *
+  CCOM,      //29  //
+  CCOMS_BEG, //30  /[mul]
+  CCOMS_END, //31  [mul]/
+  CNSIGN,    //32  #
+  CDECLEND,  //33  ;
+  CVBR,      //34  |
+  CDOT,      //35  .
+  CSPACE,    //36  [space]
+  CTERM,     //37  0x0A
+  CSUCALL,   //38  super call, eg. super(), used in parsing, not scan,
+  CSUMCALL,  //39  super method call, eg. super[middle dot]foo()
+  CSEMCALL,  //40  self method call, eg. [middle dot]foo()
+  CIDMCALL,  //41  id method call, eg. bar[middle dot]foo()
+  CSIDMCALL, //42  self id method call, eg. @bar[middle dot]foo()
+  CSTMCALL,  //43  static id method call, eg. bar[low grave accent]foo()
+  CSSTMCALL, //44  self static id method call, eg. @bar[bow grave accent]foo()
+  CFREQUIRE, //45  require file name, eg. require "abc.c"
+  CCMETHOD,  //46  class method, eg. void : abc(int x) { }
+  CSUCCALL,  //47  super class call, eg. void : abc(int x) { super(x) }
+  CSUCMCALL, //48  super class method call, eg.
              //      void : foo(int x) { }
              //      void : bar(int x, int y) { super[middle dot]foo(x) }
 
-  CLASS,     //47  class
-  EXTENDS,   //48  <
-  LBLOCK,    //49  {
-  RBLOCK,    //50  }
-  STRUCT,    //51  struct
-  METHODS,   //52  methods
-  TERM,      //53  [\r\n\s]+
+  CLASS,     //49  class
+  EXTENDS,   //50  <
+  LBLOCK,    //51  {
+  RBLOCK,    //52  }
+  STRUCT,    //53  struct
+  METHODS,   //54  methods
+  TERM,      //55  [\r\n\s]+
 
-  SELF,      //54  self
-  ID,        //55  [a-zA-Z_][a-zA-Z_1-9]*
-  METHOD,    //56  :
-  STAT,      //57  ;
-  TSELF,     //58  [middle dot]
-  TCLASS,    //59  [middle dot][middle dot]
-  OTHERS     //60  .*
+  SELF,      //56  self
+  ID,        //57  [a-zA-Z_][a-zA-Z_1-9]*
+  METHOD,    //58  :
+  STAT,      //59  ;
+  TSELF,     //60  [middle dot]
+  TCLASS,    //61  [middle dot][middle dot]
+  OTHERS     //62  .*
 } def_t;
 
 typedef struct {
@@ -689,6 +691,7 @@ typedef enum {
   CCALL1, CCALL2,
   CSTCALL1, CSTCALL2,
   CTCLASS1,
+  CDEFMAC1,
   CMACRO1,
   CREQUIRE1, CREQUIRE2, CREQUIRE3, CREQUIRE4, CREQUIRE5, CREQUIRE6, CREQUIRE7,
   CCLASS1, CCLASS2, CCLASS3, CCLASS4, CCLASS5,
@@ -696,6 +699,7 @@ typedef enum {
   CTYPEDEF1, CTYPEDEF2, CTYPEDEF3, CTYPEDEF4, CTYPEDEF5, CTYPEDEF6, CTYPEDEF7,
   CMETHOD1, CMETHOD2,
   CINSTANCE1, CINSTANCE2,
+  CYIELD1, CYIELD2, CYIELD3, CYIELD4, CYIELD5,
   CSELF1, CSELF2, CSELF3, CSELF4, CSELF5,
   CSUPER1, CSUPER2, CSUPER3, CSUPER4,
   CSTATIC1, CSTATIC2, CSTATIC3, CSTATIC4, CSTATIC5,
@@ -760,35 +764,39 @@ static dfa_t ccall[] = {
 };
 
 static dfa_t cdid[] = {
-  UCMP('_'),
-
-  UCMP('Z'),
   UCMP('r'),
 
+  UCMP('Z'),
+  UCMP('x'),
+
   UCMP('9'),
-  UPERIOD('_', '_'),
-  UPERIOD('a', 'r'), // no [s]elf
-  UPERIOD('t', 'z'),
+  UCMP('_'),
+  UPERIOD('t', 'x'), // no [y]ield
+  UPERIOD('z', 'z'),
 
   UPERIOD('0', '9'),
-  UPERIOD('A', 'Z')
+  UPERIOD('A', 'Z'),
+  UPERIOD('_', '_'),
+  UPERIOD('a', 'r')  // no [s]elf
 };
 
 static dfa_t cmethod[] = {
-  UCMP('q'),
+  UCMP('l'),
 
   UCMP('b'),
   UCMP('s'),
 
   UCMP('_'),
   UCMP('d'),
-  UPERIOD('s', 's'), // no [t]ypedef
+  UCMP('q'),
   UPERIOD('u', 'z'),
 
   UPERIOD('_', '_'), // no [A-Z]
   UPERIOD('a', 'b'), // no [c]class
   UPERIOD('d', 'd'), // no [e]nd
-  UPERIOD('f', 'q')  // no [r]equire
+  UPERIOD('f', 'l'), // no [m]acro
+  UPERIOD('n', 'q'), // no [r]equire
+  UPERIOD('s', 's')  // no [t]ypedef
 };
 
 static dfa_t cupper[] = {
@@ -947,6 +955,7 @@ static next_t cstate_cstart = {
     NEXT_CHAR(':', CMETHOD1),
     NEXT_CHAR('@', CINSTANCE1),
     NEXT_CHAR('s', CSELF1),
+    NEXT_CHAR('y', CYIELD1),
     NEXT_CHAR('(', CLPARE1),
     NEXT_CHAR(')', CRPARE1),
     NEXT_CHAR('{', CLBRACE1),
@@ -993,9 +1002,14 @@ static next_t cstate_cmethod1 = {
     NEXT_CHAR('c', CCLASS1),
     NEXT_CHAR('e', CEND1),
     NEXT_CHAR('t', CTYPEDEF1),
+    NEXT_CHAR('m', CDEFMAC1),
     NEXT_STATE(cupper, CMACRO1), 0
   },
   FINISHED_STATE(OTHERS)
+};
+static next_t cstate_cdefmac = {
+  NEXT_1STATE(did_tail, CDEFMAC1),
+  FINISHED_STATE(CDEFMAC)
 };
 static next_t cstate_cmacro = {
   NEXT_1STATE(did_tail, CMACRO1),
@@ -1042,6 +1056,13 @@ static next_t cstate_cinstance1 = {
 static next_t cstate_cinstance2 = {
   NEXT_1STATE(did_tail, CINSTANCE2),
   FINISHED_STATE(CINSTANCE)
+};
+static next_t cstate_cyield[] = {
+  NEXT_CKEYWORD('i', CYIELD2, dnot_i),
+  NEXT_CKEYWORD('e', CYIELD3, dnot_e),
+  NEXT_CKEYWORD('l', CYIELD4, dnot_l),
+  NEXT_CKEYWORD('d', CYIELD5, dnot_d),
+  NEXT_CCHAR_END(CYIELD)
 };
 static next_t cstate_cself1 = {
   (scmp_t[]) {
@@ -1123,6 +1144,7 @@ cscan_states(void) {
   states[CSTCALL2] = cstate_cstcall2;
   states[CMETHOD1] = cstate_cmethod1;
   states[CMETHOD2] = cstate_cmethod2;
+  states[CDEFMAC1] = cstate_cdefmac;
   states[CMACRO1] = cstate_cmacro;
   states[CREQUIRE1] = cstate_crequire[0];
   states[CREQUIRE2] = cstate_crequire[1];
@@ -1148,6 +1170,11 @@ cscan_states(void) {
   states[CTYPEDEF7] = cstate_ctypedef[6];
   states[CINSTANCE1] = cstate_cinstance1;
   states[CINSTANCE2] = cstate_cinstance2;
+  states[CYIELD1] = cstate_cyield[0];
+  states[CYIELD2] = cstate_cyield[1];
+  states[CYIELD3] = cstate_cyield[2];
+  states[CYIELD4] = cstate_cyield[3];
+  states[CYIELD5] = cstate_cyield[4];
   states[CSELF1] = cstate_cself1;
   states[CSELF2] = cstate_cself2[0];
   states[CSELF3] = cstate_cself2[1];
@@ -1556,10 +1583,10 @@ ary_free(ary_t * ary) {
 #define imp_add(toks, tok) \
   ary_add(toks, tok, sizeof(tok_t *))
 
-#define mac_new(toks, capa) \
-  ary_new(macs, capa, sizeof(mac_t))
+#define mac_new(macs) \
+  ary_new(macs, 1, sizeof(mac_t))
 
-#define mac_add(macs, tok) \
+#define mac_add(macs, mac) \
   ary_add(macs, mac, sizeof(mac_t))
 
 #define exp_new(toks, capa) \
@@ -1737,10 +1764,15 @@ tok_cpy(tok_t * original) {
 }
 
 tok_t *
-cal_add_cpy(src_t * src, tok_t * tok) {
+mac_add_cpy(ary_t * toks, tok_t * tok) {
   tok_t * new = tok_cpy(tok);
-  cal_add(&src->toks, &new);
+  cal_add(toks, &new);
   return new;
+}
+
+tok_t *
+cal_add_cpy(src_t * src, tok_t * tok) {
+  return mac_add_cpy(&src->toks, tok);
 }
 
 size_t
@@ -1848,38 +1880,54 @@ cparse_def(cclass_t * class, src_t * src, scan_t * scan, tok_t * next) {
 }
 
 void
-cal_add_cat(src_t * src, tok_t * prev, tok_t * next) {
+mac_add_cat(ary_t * toks, tok_t * prev, tok_t * next) {
   tok_t * new = tok_cpy(prev);
   new->len += next->len;
-  cal_add(&src->toks, &new);
+  cal_add(toks, &new);
+}
+
+void
+cal_add_cat(src_t * src, tok_t * prev, tok_t * next) {
+  mac_add_cat(&src->toks, prev, next);
+}
+
+void
+mac_add_two(ary_t * toks, tok_t * self, tok_t * name) {
+  cal_t * tok = calloc(1, sizeof(cal_t));
+  tok->self = * self;
+  tok->name = * name;
+  cal_add(toks, &tok);
 }
 
 void
 cal_add_two(src_t * src, tok_t * self, tok_t * name) {
-  cal_t * tok = calloc(1, sizeof(cal_t));
-  tok->self = * self;
-  tok->name = * name;
-  cal_add(&src->toks, &tok);
+  mac_add_two(&src->toks, self, name);
+}
+
+void
+cparse_mcall(ary_t * toks, scan_t * scan, tok_t * self) {
+  tok_t next = parse_next(scan);
+  if (parse_test(&next, CCALL)) {
+    self->def = CIDMCALL;
+    mac_add_two(toks, self, &next);
+  } else if (parse_test(&next, CSTCALL)) {
+    self->def = CSTMCALL;
+    mac_add_two(toks, self, &next);
+  } else if (parse_test(&next, CSPACE)) {
+    mac_add_cpy(toks, self);
+    mac_add_cpy(toks, &next);
+  } else if (parse_test(&next, CTERM)) {
+    mac_add_cpy(toks, self);
+    mac_add_cpy(toks, &next);
+  } else {
+    mac_add_cpy(toks, self);
+    mac_add_cpy(toks, &next);
+  }
 }
 
 void
 cparse_call(src_t * src, scan_t * scan, tok_t * self) {
-  tok_t next = parse_next(scan);
-  if (parse_test(&next, CCALL)) {
-    self->def = CIDMCALL;
-    cal_add_two(src, self, &next);
-  } else if (parse_test(&next, CSTCALL)) {
-    self->def = CSTMCALL;
-    cal_add_two(src, self, &next);
-  } else if (parse_test(&next, CSPACE)) {
-    cal_add_cpy(src, self);
-    cal_add_cpy(src, &next);
-  } else if (parse_test(&next, CTERM)) {
-    cal_add_cpy(src, self);
-    cal_add_cpy(src, &next);
-  } else {
-    cal_add_cat(src, self, &next);
-  }
+  cparse_mcall(&src->toks, scan, self);
 }
 
 void
@@ -2012,52 +2060,93 @@ cparse_typedef(src_t * src, scan_t * scan, tok_t * tok) {
 }
 
 void
-cparse_instance(src_t * src, scan_t * scan, tok_t * tok) {
+cparse_minstance(ary_t * toks, scan_t * scan, tok_t * tok) {
   tok_t first = * tok;
   * tok = parse_next(scan);
   if (parse_test(tok, CCALL)) {
     first.def = CSIDMCALL;
-    cal_add_two(src, &first, tok);
+    mac_add_two(toks, &first, tok);
     * tok = parse_next(scan);
   } else if (parse_test(tok, CSTCALL)) {
     first.def = CSSTMCALL;
-    cal_add_two(src, &first, tok);
+    mac_add_two(toks, &first, tok);
     * tok = parse_next(scan);
   } else {
-    cal_add_cpy(src, &first);
+    mac_add_cpy(toks, &first);
   }
 }
 
 void
-cclass_pexp(exp_t * exp) {
-  printf("[class: ");
-  tok_ptail(&exp->class, stdout);
-  printf("\nmeth: ");
-  tok_print(&exp->meth, stdout);
-  printf("\nargs: ");
-  size_t i = 0;
-  for (; i < exp->args.len; i++) {
-    tok_t * arg = tok_get(&exp->args, i);
-    tok_print(arg, stdout);
+cparse_instance(src_t * src, scan_t * scan, tok_t * tok) {
+  cparse_minstance(&src->toks, scan, tok);
+}
+
+void
+cparse_rexp(ary_t * toks, scan_t * scan, tok_t * tok);
+
+int
+cparse_msrc(ary_t * toks, scan_t * scan, tok_t * tok, size_t * braces) {
+  if (parse_test(tok, CMACRO)) {
+    cparse_rexp(toks, scan, tok);
+  } else if (parse_test(tok, CSELF)) {
+    tok->def = CID;
+    mac_add_cpy(toks, tok);
+  } else if (parse_test(tok, CID)) {
+    cparse_mcall(toks, scan, tok);
+  } else if (parse_test(tok, CCALL)) {
+    tok->def = CSEMCALL;
+    mac_add_cpy(toks, tok);
+  } else if (parse_test(tok, CINSTANCE)) {
+    cparse_minstance(toks, scan, tok);
+    return 0;
+  } else if (parse_test(tok, CLBRACE)) {
+    * braces += 1;
+    mac_add_cpy(toks, tok);
+  } else if (parse_test(tok, CRBRACE)) {
+    * braces -= 1;
+    if (* braces == 0) return 1;
+    mac_add_cpy(toks, tok);
+  } else {
+    mac_add_cpy(toks, tok);
   }
-  printf("\nyargs: ");
-  i = 0;
-  for (; i < exp->yargs.len; i++) {
-    tok_t * yarg = tok_get(&exp->yargs, i);
-    tok_print(yarg, stdout);
-    printf(" ");
+  * tok = parse_next(scan);
+  return 0;
+}
+
+void
+cparse_mac(src_t * src, scan_t * scan, tok_t * tok) {
+  mac_t mac = {0};
+  mac.class = * tok;
+  parse_match(scan, CSPACE);
+  mac.meth = parse_match(scan, CID);
+  parse_match(scan, CSPACE);
+  tok_new(&mac.args);
+  * tok = parse_next(scan);
+  while (!parse_test(tok, CLBRACE)) {
+    parse_check(tok, CID);
+    tok_add(&mac.args, tok);
+    parse_match(scan, CSPACE);
+    * tok = parse_next(scan);
   }
-  printf("\ntoks: ]");
-  i = 0;
-  for (; i < exp->toks.len; i++) {
-    cal_t * the_tok = cal_get(&exp->toks, i);
-    if (the_tok->self.def == CMACRO) {
-      cclass_pexp((exp_t *) the_tok);
-    } else {
-      cal_print(the_tok, stdout);
-    }
+  parse_match(scan, CSPACE);
+  * tok = parse_next(scan);
+  if (parse_test(tok, CVBR)) {
+    tok_new(&mac.yargs);
+    do {
+      * tok = parse_match(scan, CID);
+      tok_add(&mac.yargs, tok);
+      * tok = parse_next(scan);
+    } while (parse_test(tok, CSPACE));
+    parse_check(tok, CVBR);
   }
-  printf(".");
+  cal_new(&mac.toks);
+  size_t braces = 1;
+  * tok = parse_next(scan);
+  while (1) {
+    int end = cparse_msrc(&mac.toks, scan, tok, &braces);
+    if (end) break;
+  }
+  mac_add(&src->macs, &mac);
 }
 
 void
@@ -2092,18 +2181,15 @@ cparse_rexp(ary_t * toks, scan_t * scan, tok_t * tok) {
     * tok = parse_next(scan);
     if (parse_test(tok, CLBRACE)) {
       braces++;
-      tok_t * new = tok_cpy(tok);
-      cal_add(&exp->toks, &new);
+      mac_add_cpy(&exp->toks, tok);
     } else if (parse_test(tok, CRBRACE)) {
       braces--;
       if (braces == 0) break;
-      tok_t * new = tok_cpy(tok);
-      cal_add(&exp->toks, &new);
+      mac_add_cpy(&exp->toks, tok);
     } else if (parse_test(tok, CMACRO)) {
       cparse_rexp(&exp->toks, scan, tok);
     } else {
-      tok_t * new = tok_cpy(tok);
-      cal_add(&exp->toks, &new);
+      mac_add_cpy(&exp->toks, tok);
     }
   }
   exp_add(toks, &exp);
@@ -2123,6 +2209,7 @@ cparse_src(cclass_t * class, scan_t * scan, tok_t * tok) {
   src_add(&class->srcs, &src);
   cal_new(&src->toks);
   tok_new(&src->typs);
+  mac_new(&src->macs);
   size_t declend = cparse_def(class, src, scan, tok);
   imp_new(&src->imps, src->meths.len);
   tok_t meth = {0};
@@ -2141,6 +2228,8 @@ cparse_src(cclass_t * class, scan_t * scan, tok_t * tok) {
     } else if (parse_test(tok, CMETHOD)) {
       meth = * tok;
       meth.def = cparse_cmeth(src, scan, tok, declend);
+    } else if (parse_test(tok, CDEFMAC)) {
+      cparse_mac(src, scan, tok);
     } else if (parse_test(tok, CMACRO)) {
       cparse_exp(src, scan, tok);
     } else if (parse_test(tok, CSELF)) {
@@ -2798,8 +2887,203 @@ class_require(cclass_t * class, utf_t * fname, h_table * fnames) {
   h_merge(classes, rclasses);
 }
 
+mac_t *
+class_find_mac(src_t * class, exp_t * exp, tok_t * ctok) {
+  ary_t * macs = &class->macs;
+  tok_t * meth = &exp->meth;
+  mac_t * mac = 0;
+  size_t i = 0;
+  for (; i < macs->len; i++) {
+    mac_t * find = mac_get(macs, i);
+    tok_t * fmeth = &find->meth;
+    if (fmeth->len == meth->len &&
+        memcmp(fmeth->string, meth->string, meth->len) == 0) {
+      mac = find;
+    }
+  }
+  if (!mac) {
+    printf("Can't find ");
+    tok_ptail(ctok, stdout);
+    printf(".");
+    tok_print(meth, stdout);
+    printf(".\n");
+    exit(0);
+  }
+  return mac;
+}
+
 void
-class_psrc(src_t * src, FILE * fsrc) {
+class_pexp(cclass_t * class, src_t * src,
+           exp_t * exp, size_t uniq, FILE * fsrc);
+
+int
+class_pmac(cclass_t * class, src_t * src,
+           ary_t * toks, size_t * i, size_t uniq,
+           tok_t * etok, FILE * fsrc) {
+  tok_t * klass = &src->class;
+  utf_t * cname = src->cname;
+    cal_t * tok = cal_get(toks, * i);
+    cal_t * next = cal_get(toks, * i + 1);
+    cal_t * nnxt = cal_get(toks, * i + 2);
+    tok_t * name = &tok->name;
+    cal_t * self = etok ? (cal_t *) etok : tok;
+    def_t def = tok->self.def;
+    if (def == CTSELF) {
+      fprintf(fsrc, "%s_t", cname);
+    } else if (def == CTCLASS) {
+      fprintf(fsrc, "%s_class_t", cname);
+    } else if (def == CMETHOD) {
+      fprintf(fsrc, "%s_method_", cname);
+      cal_ptail(tok, fsrc);
+    } else if (def == CMACRO) {
+      class_pexp(class, src, (exp_t *) tok, uniq + 1, fsrc);
+      return 1;
+    } else if (def == CSELF) {
+      fprintf(fsrc, "%s_t * ", cname);
+      cal_print(tok, fsrc);
+    } else if (def == CINSTANCE) {
+      fprintf(fsrc, "self->");
+      cal_ptail(tok, fsrc);
+    } else if (def == CSUCALL) {
+      fprintf(fsrc, "self->_.super()->");
+      cal_ptail(tok, fsrc);
+      fprintf(fsrc, "(self");
+      class_parg(next, nnxt, i, fsrc);
+    } else if (def == CSUCCALL) {
+      tok_print(klass, fsrc);
+      fprintf(fsrc, ".super(0)->");
+      cal_ptail(tok, fsrc);
+      fprintf(fsrc, "(");
+      class_pcarg(next, i, fsrc);
+    } else if (def == CSUMCALL) {
+      fprintf(fsrc, "self->_.super()->");
+      tok_ptail(name, fsrc);
+      fprintf(fsrc, "(self");
+      class_parg(next, nnxt, i, fsrc);
+    } else if (def == CSUCMCALL) {
+      tok_print(klass, fsrc);
+      fprintf(fsrc, ".super(0)->");
+      tok_ptail(name, fsrc);
+      fprintf(fsrc, "(");
+      class_pcarg(next, i, fsrc);
+    } else if (def == CSEMCALL) {
+      fprintf(fsrc, "self->_->");
+      cal_ptail(tok, fsrc);
+      fprintf(fsrc, "(self");
+      class_parg(next, nnxt, i, fsrc);
+    } else if (def == CIDMCALL) {
+      cal_print(self, fsrc);
+      fprintf(fsrc, "->_->");
+      tok_ptail(name, fsrc);
+      fprintf(fsrc, "(");
+      cal_print(self, fsrc);
+      class_parg(next, nnxt, i, fsrc);
+    } else if (def == CSIDMCALL) {
+      fprintf(fsrc, "self->");
+      cal_ptail(tok, fsrc);
+      fprintf(fsrc, "->_->");
+      tok_ptail(name, fsrc);
+      fprintf(fsrc, "(self->");
+      cal_ptail(tok, fsrc);
+      class_parg(next, nnxt, i, fsrc);
+    } else if (def == CSTMCALL) {
+      cal_print(self, fsrc);
+      fprintf(fsrc, "._->");
+      tok_ptail(name, fsrc);
+      fprintf(fsrc, "(&");
+      cal_print(self, fsrc);
+      class_parg(next, nnxt, i, fsrc);
+    } else if (def == CSSTMCALL) {
+      fprintf(fsrc, "self->");
+      cal_ptail(tok, fsrc);
+      fprintf(fsrc, "._->");
+      tok_ptail(name, fsrc);
+      fprintf(fsrc, "(&self->");
+      cal_ptail(tok, fsrc);
+      class_parg(next, nnxt, i, fsrc);
+    } else {
+      cal_print(self, fsrc);
+    }
+}
+
+void
+class_pexp(cclass_t * class, src_t * src,
+           exp_t * exp, size_t uniq, FILE * fsrc) {
+  src_t * klass = 0;
+  tok_t * ctok = &exp->class;
+  int get = h_get(class->classes, ctok->string + 1, ctok->len - 1,
+                  (h_data_t *) &klass);
+  if (!get) {
+    printf("Please require ");
+    tok_ptail(ctok, stdout);
+    printf(".\n");
+    exit(0);
+  }
+  mac_t * mac = class_find_mac(klass, exp, ctok);
+  h_table * map = h_init();
+  h_table * ymap = h_init();
+  h_table * yrmap = h_init();
+  ary_t * paras = &mac->args;
+  ary_t * args = &exp->args;
+  size_t i = 0;
+  for (; i < paras->len; i++) {
+    tok_t * para = tok_get(paras, i);
+    tok_t * arg = tok_get(args, i);
+    h_insert(map, para->string, para->len, (h_data_t) arg);
+  }
+  ary_t * yparas = &mac->yargs;
+  ary_t * yargs = &exp->yargs;
+  i = 0;
+  for (; i < yparas->len; i++) {
+    tok_t * ypara = tok_get(yparas, i);
+    tok_t * yarg = tok_get(yargs, i);
+    h_insert(ymap, ypara->string, ypara->len, (h_data_t) yarg);
+    h_insert(yrmap, yarg->string, yarg->len, (h_data_t) ypara);
+  }
+  size_t yuniq = uniq;
+  ary_t * mtoks = &mac->toks;
+  i = 0;
+  for (; i < mtoks->len; i++) {
+    tok_t * mtok = (tok_t *) cal_get(mtoks, i);
+    def_t def = mtok->def;
+    if (def == CYIELD) {
+      ary_t * etoks = &exp->toks;
+      size_t ei = 0;
+      for (; ei < etoks->len; ei++) {
+        tok_t * etok = (tok_t *) cal_get(etoks, ei);
+        tok_t * eetok = 0;
+        int match = h_get(yrmap, etok->string, etok->len, (h_data_t *) &eetok);
+        if (match) {
+          cal_print(etok, fsrc);
+          fprintf(fsrc, "_%zu", uniq);
+          continue;
+        }
+        int yield = class_pmac(class, klass, etoks, &ei, yuniq, 0, fsrc);
+        if (yield) yuniq++;
+      }
+      continue;
+    }
+    tok_t * etok = 0;
+    int match = h_get(ymap, mtok->string, mtok->len, (h_data_t *) &etok);
+    if (match) {
+      cal_print(etok, fsrc);
+      fprintf(fsrc, "_%zu", uniq);
+      continue;
+    }
+    match = h_get(map, mtok->string, mtok->len, (h_data_t *) &etok);
+    if (match) {
+      class_pmac(class, klass, mtoks, &i, uniq, etok, fsrc);
+    } else {
+      class_pmac(class, klass, mtoks, &i, uniq, 0, fsrc);
+    }
+  }
+  h_free(yrmap);
+  h_free(ymap);
+  h_free(map);
+}
+
+void
+class_psrc(cclass_t * class, src_t * src, FILE * fsrc) {
   ary_t * toks = &src->toks;
   size_t i = 0;
   for (; i < toks->len; i++) {
@@ -2807,7 +3091,8 @@ class_psrc(src_t * src, FILE * fsrc) {
     def_t def = tok->self.def;
     if (def != CTERM) break;
   }
-  tok_t * class = &src->class;
+  size_t uniq = 0;
+  tok_t * klass = &src->class;
   utf_t * cname = src->cname;
   for (; i < toks->len; i++) {
     cal_t * tok = cal_get(toks, i);
@@ -2822,6 +3107,8 @@ class_psrc(src_t * src, FILE * fsrc) {
     } else if (def == CMETHOD) {
       fprintf(fsrc, "%s_method_", cname);
       cal_ptail(tok, fsrc);
+    } else if (def == CMACRO) {
+      class_pexp(class, src, (exp_t *) tok, uniq++, fsrc);
     } else if (def == CSELF) {
       fprintf(fsrc, "%s_t * ", cname);
       cal_print(tok, fsrc);
@@ -2834,7 +3121,7 @@ class_psrc(src_t * src, FILE * fsrc) {
       fprintf(fsrc, "(self");
       class_parg(next, nnxt, &i, fsrc);
     } else if (def == CSUCCALL) {
-      tok_print(class, fsrc);
+      tok_print(klass, fsrc);
       fprintf(fsrc, ".super(0)->");
       cal_ptail(tok, fsrc);
       fprintf(fsrc, "(");
@@ -2845,7 +3132,7 @@ class_psrc(src_t * src, FILE * fsrc) {
       fprintf(fsrc, "(self");
       class_parg(next, nnxt, &i, fsrc);
     } else if (def == CSUCMCALL) {
-      tok_print(class, fsrc);
+      tok_print(klass, fsrc);
       fprintf(fsrc, ".super(0)->");
       tok_ptail(name, fsrc);
       fprintf(fsrc, "(");
@@ -2902,7 +3189,7 @@ class_gen(cclass_t * class, FILE * fsrc) {
       class_praw(src, fsrc);
     } else {
       class_pstructs(class, src, fsrc);
-      class_psrc(src, fsrc);
+      class_psrc(class, src, fsrc);
     }
   }
 }

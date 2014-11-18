@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-:require "yparent.c"
+:require "parent.c"
 
 :class Child < Parent {
 
