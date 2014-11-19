@@ -691,7 +691,7 @@ typedef enum {
   CCALL1, CCALL2,
   CSTCALL1, CSTCALL2,
   CTCLASS1,
-  CDEFMAC1,
+  CDEFMAC1, CDEFMAC2, CDEFMAC3, CDEFMAC4, CDEFMAC5,
   CMACRO1,
   CREQUIRE1, CREQUIRE2, CREQUIRE3, CREQUIRE4, CREQUIRE5, CREQUIRE6, CREQUIRE7,
   CCLASS1, CCLASS2, CCLASS3, CCLASS4, CCLASS5,
@@ -1007,9 +1007,12 @@ static next_t cstate_cmethod1 = {
   },
   FINISHED_STATE(OTHERS)
 };
-static next_t cstate_cdefmac = {
-  NEXT_1STATE(did_tail, CDEFMAC1),
-  FINISHED_STATE(CDEFMAC)
+static next_t cstate_cdefmac[] = {
+  NEXT_CMKEYWORD('a', CDEFMAC2, dnot_a),
+  NEXT_CMKEYWORD('c', CDEFMAC3, dnot_c),
+  NEXT_CMKEYWORD('r', CDEFMAC4, dnot_r),
+  NEXT_CMKEYWORD('o', CDEFMAC5, dnot_o),
+  NEXT_CMETHOD(CDEFMAC)
 };
 static next_t cstate_cmacro = {
   NEXT_1STATE(did_tail, CMACRO1),
@@ -1144,7 +1147,11 @@ cscan_states(void) {
   states[CSTCALL2] = cstate_cstcall2;
   states[CMETHOD1] = cstate_cmethod1;
   states[CMETHOD2] = cstate_cmethod2;
-  states[CDEFMAC1] = cstate_cdefmac;
+  states[CDEFMAC1] = cstate_cdefmac[0];
+  states[CDEFMAC2] = cstate_cdefmac[1];
+  states[CDEFMAC3] = cstate_cdefmac[2];
+  states[CDEFMAC4] = cstate_cdefmac[3];
+  states[CDEFMAC5] = cstate_cdefmac[4];
   states[CMACRO1] = cstate_cmacro;
   states[CREQUIRE1] = cstate_crequire[0];
   states[CREQUIRE2] = cstate_crequire[1];
