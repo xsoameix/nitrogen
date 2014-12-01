@@ -766,18 +766,16 @@ static dfa_t ccall[] = {
 static dfa_t cdid[] = {
   UCMP('r'),
 
-  UCMP('Z'),
+  UCMP('_'),
   UCMP('x'),
 
-  UCMP('9'),
-  UCMP('_'),
+  UCMP('Z'),
+  UPERIOD('a', 'r'), // no [s]elf
   UPERIOD('t', 'x'), // no [y]ield
   UPERIOD('z', 'z'),
 
-  UPERIOD('0', '9'),
   UPERIOD('A', 'Z'),
-  UPERIOD('_', '_'),
-  UPERIOD('a', 'r')  // no [s]elf
+  UPERIOD('_', '_')
 };
 
 static dfa_t cmethod[] = {
