@@ -3187,9 +3187,17 @@ class_psrc(cclass_t * class, src_t * src, FILE * fsrc) {
 
 void
 class_gen(cclass_t * class, FILE * fsrc) {
-  class_pbases(class, fsrc);
   ary_t * srcs = &class->srcs;
   size_t i = 0;
+  for (; i < srcs->len; i++) {
+    src_t * src = src_get(srcs, i);
+    if (src->class.string == NULL) {
+      class_praw(src, fsrc);
+    } else {
+      class_pbases(class, fsrc);
+      break;
+    }
+  }
   for (; i < srcs->len; i++) {
     src_t * src = src_get(srcs, i);
     if (src->class.string == NULL) {
