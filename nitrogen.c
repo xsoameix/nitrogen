@@ -164,7 +164,7 @@ h_eq(h_data_t a, h_size_t alen, h_data_t b, h_size_t blen) {
 int
 h_hit(h_entry * entry, h_data_t key, h_size_t klen, h_size_t hval) {
   return entry != 0 && (entry->hash != hval ||
-                        h_eq(entry->key, entry->klen, key, klen));
+                        !h_eq(entry->key, entry->klen, key, klen));
 }
 
 h_entry *
