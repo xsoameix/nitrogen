@@ -12,11 +12,11 @@ A compiler adding object oriented feature to C
 
 ## Installation
 
-    $ cc nitrogen.c -o nitrogen
+    $ cmake . && make && sudo make install
 
 ## Usage
 
-    $ ./nitrogen your_source_code.c
+    $ nitrogen your_source_code.c
     $ cc your_source_code.c.c -o your_application
 
 ## Syntax
