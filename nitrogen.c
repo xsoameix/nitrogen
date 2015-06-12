@@ -158,7 +158,7 @@ h_add(h_table * table, h_data_t key, h_size_t klen,
 
 int
 h_eq(h_data_t a, h_size_t alen, h_data_t b, h_size_t blen) {
-  return a == b || alen == blen && memcmp(a, b, alen);
+  return a == b || alen == blen && memcmp(a, b, alen) == 0;
 }
 
 int
