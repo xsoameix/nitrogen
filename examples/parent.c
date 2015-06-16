@@ -5,11 +5,9 @@
   }
 }
 
-·
-:new(int x) {
-  · self = {0};
-  self.x = x;
-  return self;
+void
+:initialize(self, int x) {
+  @x = x;
 }
 
 int

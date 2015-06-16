@@ -23,10 +23,10 @@ void
 
 int
 main(void) {
-  foo_t foo = {&Foo};
-  bar_t bar = {&Bar, &foo, foo};
-  barˎcall_foo;
+  foo_t foo = Foo();
+  bar_t bar = Bar(&foo, foo);
   bar_t * bar_p = &bar;
+  barˎcall_foo;
   bar_p·call_foo;
   return 0;
 }

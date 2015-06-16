@@ -2652,6 +2652,15 @@ class_pextn(src_t * src, FILE * fsrc) {
 }
 
 void
+class_pnew(src_t * src, FILE * fsrc) {
+  fprintf(fsrc, "#define ");
+  tok_print(&src->class, fsrc);
+  fprintf(fsrc, "(...) ((%s_t) {&", src->cname);
+  tok_print(&src->class, fsrc);
+  fprintf(fsrc, ", ##__VA_ARGS__})\n");
+}
+
+void
 class_pbases(cclass_t * class, FILE * fsrc) {
   utf_t object[] = "object";
   class_pctyp(object, fsrc);
@@ -2674,6 +2683,7 @@ class_pbases(cclass_t * class, FILE * fsrc) {
     class_pstruct(class, src, class->classes, fsrc);
     class_pextn(src, fsrc);
     class_pmdecl(src, meths, fsrc);
+    class_pnew(src, fsrc);
     h_free(meths);
   }
 }
@@ -2752,6 +2762,7 @@ class_pstructs(cclass_t * class, src_t * src, FILE * fsrc) {
   class_pmstruct(class, src, meths, fsrc);
   class_pstruct(class, src, class->classes, fsrc);
   class_pmdecl(src, meths, fsrc);
+  class_pnew(src, fsrc);
   class_pmsuper(src, fsrc);
   class_pclass(class, src, meths, fsrc);
   h_free(meths);

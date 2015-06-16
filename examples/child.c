@@ -11,12 +11,15 @@
 
 ·
 :new(int x, int y) {
-  parent_t parent = super(x);
-  · self = {0};
-  * (parent_t *) &self = parent;
-  self.class = &Child;
-  self.y = y;
-  return self;
+  · object = Child();
+  object∘initialize(x, y);
+  return object;
+}
+
+void
+:initialize(self, int x, int y) {
+  super(x);
+  @y = y;
 }
 
 int

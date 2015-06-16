@@ -11,8 +11,7 @@
 · *
 :new(int num) {
   · * self = calloc(1, sizeof(·));
-  self->class = &Foo;
-  self->num = num;
+  * self = Foo(num);
   return self;
 }
 

@@ -13,10 +13,8 @@
 
 void *
 :new(void) {
-  · * self = calloc(1, sizeof(·));
-  @class = &Ary;
-  @capa = 1;
-  @objs = calloc(@capa, sizeof(void *));
+  · * self = malloc(sizeof(·));
+  * self = Ary(0, 1, calloc(@capa, sizeof(void *)));
   return self;
 }
 

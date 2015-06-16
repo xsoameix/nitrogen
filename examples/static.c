@@ -9,10 +9,7 @@
 
 ·
 :new(int num) {
-  · self = {0};
-  self.class = &Foo;
-  self.num = num;
-  return self;
+  return Foo(num);
 }
 
 int
