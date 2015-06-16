@@ -2961,9 +2961,9 @@ class_pmac(cclass_t * class, src_t * src,
       fprintf(fsrc, "self->");
       cal_ptail(tok, fsrc);
     } else if (def == CSUCALL) {
-      fprintf(fsrc, "self->_.super()->");
+      fprintf(fsrc, "self->_->super(0)->");
       cal_ptail(tok, fsrc);
-      fprintf(fsrc, "(self");
+      fprintf(fsrc, "(((void *) self)");
       class_parg(next, nnxt, i, fsrc);
     } else if (def == CSUCCALL) {
       tok_print(klass, fsrc);
@@ -2972,9 +2972,9 @@ class_pmac(cclass_t * class, src_t * src,
       fprintf(fsrc, "(");
       class_pcarg(next, i, fsrc);
     } else if (def == CSUMCALL) {
-      fprintf(fsrc, "self->_.super()->");
+      fprintf(fsrc, "self->_->super(0)->");
       tok_ptail(name, fsrc);
-      fprintf(fsrc, "(self");
+      fprintf(fsrc, "(((void *) self)");
       class_parg(next, nnxt, i, fsrc);
     } else if (def == CSUCMCALL) {
       tok_print(klass, fsrc);
@@ -3132,9 +3132,9 @@ class_psrc(cclass_t * class, src_t * src, FILE * fsrc) {
       fprintf(fsrc, "self->");
       cal_ptail(tok, fsrc);
     } else if (def == CSUCALL) {
-      fprintf(fsrc, "self->_.super()->");
+      fprintf(fsrc, "self->_->super(0)->");
       cal_ptail(tok, fsrc);
-      fprintf(fsrc, "(self");
+      fprintf(fsrc, "(((void *) self)");
       class_parg(next, nnxt, &i, fsrc);
     } else if (def == CSUCCALL) {
       tok_print(klass, fsrc);
@@ -3143,9 +3143,9 @@ class_psrc(cclass_t * class, src_t * src, FILE * fsrc) {
       fprintf(fsrc, "(");
       class_pcarg(next, &i, fsrc);
     } else if (def == CSUMCALL) {
-      fprintf(fsrc, "self->_.super()->");
+      fprintf(fsrc, "self->_->super(0)->");
       tok_ptail(name, fsrc);
-      fprintf(fsrc, "(self");
+      fprintf(fsrc, "(((void *) self)");
       class_parg(next, nnxt, &i, fsrc);
     } else if (def == CSUCMCALL) {
       tok_print(klass, fsrc);
