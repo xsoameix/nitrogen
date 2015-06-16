@@ -81,12 +81,12 @@ A compiler adding object oriented feature to C
           ·bar(x, y);
         }
 
-    Use modifier letter low grave accent 'ˎ' if you're calling the method of 'struct', not the 'struct *'
+    Use modifier letter function composition '∘' if you're calling the method of 'struct'.
 
         int
         :foo(self, int x, int y) {
           foo_t self_struct = * self;
-          self_structˎbar(x, y);
+          self_struct∘bar(x, y);
         }
 
 *   Call Superclass Method
@@ -121,6 +121,24 @@ A compiler adding object oriented feature to C
           return @foo;
         }
 
+*   Create an instance
+
+    Use 'ClassName(...)' to create an instance and the arguments in the parentheses will be assigned to the instance.
+
+        :class Foo {
+
+          struct {
+            char * string;
+            int number;
+          }
+        }
+
+        int
+        main(void) {
+          foo_t foo = Foo("hello", 1);
+          return 0;
+        }
+
 *   The Class and Instance Type Name
 
     '··' is the shortcut of the class type name.
@@ -133,9 +151,8 @@ A compiler adding object oriented feature to C
 
         · *
         :new(int num) {
-          · * self = calloc(1, sizeof(·));
-          self->class = &Foo;
-          self->foo = num;
+          · * self = malloc(sizeof(·));
+          * self = Foo(num);
           return self;
         }
 
