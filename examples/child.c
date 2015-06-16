@@ -30,6 +30,6 @@ int
 int
 main(void) {
   child_t child = Child.new(1, 2);
-  printf("%s(%d, %d)\n", child.class->name, childˎx, childˎy);
+  printf("%s(%d, %d)\n", child.class->name, child∘x, child∘y);
   return 0;
 }

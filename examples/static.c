@@ -20,6 +20,6 @@ int
 int
 main(void) {
   foo_t foo = Foo.new(1);
-  printf("foo num: %d\n", fooˎnum);
+  printf("foo num: %d\n", foo∘num);
   return 0;
 }

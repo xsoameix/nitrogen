@@ -566,7 +566,7 @@ typedef enum {
   CTSELF,    // 1  [middle dot]
   CCALL,     // 2  [middle dot][a-zA-Z_][a-zA-Z_1-9]*
   CTCLASS,   // 3  [middle dot][middle dot]
-  CSTCALL,   // 4  [low grave accent][a-zA-Z_][a-zA-Z_1-9]
+  CSTCALL,   // 4  [func composition dot][a-zA-Z_][a-zA-Z_1-9]
   CDEFMAC,   // 5  : [A-Z]
   CMACRO,    // 6  : [A-Z]
   CREQUIRE,  // 7  : require
@@ -605,7 +605,7 @@ typedef enum {
   CSEMCALL,  //40  self method call, eg. [middle dot]foo()
   CIDMCALL,  //41  id method call, eg. bar[middle dot]foo()
   CSIDMCALL, //42  self id method call, eg. @bar[middle dot]foo()
-  CSTMCALL,  //43  static id method call, eg. bar[low grave accent]foo()
+  CSTMCALL,  //43  static id method call, eg. bar[func composition dot]foo()
   CSSTMCALL, //44  self static id method call, eg. @bar[bow grave accent]foo()
   CFREQUIRE, //45  require file name, eg. require "abc.c"
   CCMETHOD,  //46  class method, eg. void : abc(int x) { }
@@ -945,7 +945,7 @@ typedef struct next {
   }
 
 #define MIDDLE_DOT 0xB7
-#define LOW_GRAVE_ACCENT 0x02CE
+#define FUNC_COMPOSITION_DOT 0x2218
 
 static next_t cstate_cstart = {
   (scmp_t[]) {
@@ -969,7 +969,7 @@ static next_t cstate_cstart = {
     NEXT_CHAR(' ', CSPACE1),
     NEXT_CHAR(0x0A, CTERM1),
     NEXT_CHAR(MIDDLE_DOT, CCALL1),
-    NEXT_CHAR(LOW_GRAVE_ACCENT, CSTCALL1), 0
+    NEXT_CHAR(FUNC_COMPOSITION_DOT, CSTCALL1), 0
   },
   GOTO_STATE(OTHERS1)
 };
