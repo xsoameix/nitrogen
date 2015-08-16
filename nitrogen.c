@@ -4,6 +4,8 @@
 #include <stddef.h>
 #include <string.h>
 #include <inttypes.h>
+#include <unistd.h>
+#include <libgen.h>
 
 typedef uint8_t utf_t;
 
@@ -1794,8 +1796,8 @@ cparse_terms(src_t * src, scan_t * scan, tok_t * tok) {
 
 #define STRLEN(str) lenof(str) - 1
 
-static utf_t basename[] = "Object";
-static tok_t baseclass = {ID, STRLEN(basename), basename};
+static utf_t ni_basename[] = "Object";
+static tok_t baseclass = {ID, STRLEN(ni_basename), ni_basename};
 
 size_t
 cparse_def(cclass_t * class, src_t * src, scan_t * scan, tok_t * next) {
@@ -1809,8 +1811,8 @@ cparse_def(cclass_t * class, src_t * src, scan_t * scan, tok_t * next) {
     parse_match(scan, LBLOCK);
   } else {
     tok_t * cls = &src->class;
-    if (cls->len != STRLEN(basename) ||
-        memcmp(cls->string, basename, STRLEN(basename)) != 0) {
+    if (cls->len != STRLEN(ni_basename) ||
+        memcmp(cls->string, ni_basename, STRLEN(ni_basename)) != 0) {
       src->super = baseclass;
     }
     parse_check(&tok, LBLOCK);
@@ -2477,7 +2479,7 @@ class_crmeths(cclass_t * class, src_t * src, h_table * meths) {
   src_t * superclass = 0;
   int get = h_get(class->classes, super->string, super->len,
                   (h_data_t *) &superclass);
-  if (!get && super->string != basename) {
+  if (!get && super->string != ni_basename) {
     printf("Please require ");
     tok_print(super, stdout);
     printf(".\n");
@@ -2560,7 +2562,7 @@ class_pshead(utf_t * cname, FILE * fsrc) {
 void
 class_pstail(src_t * src, src_t * base, h_table * classes, FILE * fsrc) {
   tok_t * super = &base->super;
-  if (super->string != basename) {
+  if (super->string != ni_basename) {
     src_t * superclass = 0;
     h_get(classes, super->string, super->len, (h_data_t *) &superclass);
     class_pstail(src, superclass, classes, fsrc);
@@ -2696,7 +2698,7 @@ class_pmsuper(src_t * src, FILE * fsrc) {
   fprintf(fsrc,
           "\n%s_class_t *\n"
           "%s_method_super(%s_t * self) {\n", sname, cname, cname);
-  if (super->string == basename) {
+  if (super->string == ni_basename) {
     fprintf(fsrc, "  return 0;\n}\n\n");
   } else {
     fprintf(fsrc, "  return &");
@@ -2891,11 +2893,18 @@ class_require(cclass_t * class, utf_t * fname, h_table * fnames) {
     ary_t * req = req_get(reqs, i);
     utf_t * str = utf_get(req, 0);
     size_t len = req->len;
-    utf_t * fname = tok_new_str(str, len);
-    int get = h_get(fnames, fname, len, (h_data_t *) &class);
+    utf_t * reqfname = tok_new_str(str, len);
+    int get = h_get(fnames, reqfname, len, (h_data_t *) &class);
     if (!get) {
-      class = file_read(1, fname, build_source, fnames);
+      char * path = tok_new_str(fname, strlen(fname));
+      char * dir = dirname(path);
+      size_t reqpath_size = strlen(dir) + 1 + len + 1;
+      char * reqpath = malloc(reqpath_size);
+      snprintf(reqpath, reqpath_size, "%s/%s", dir, reqfname);
+      class = file_read(1, reqpath, build_source, fnames);
+      free(path);
     }
+    free(reqfname);
     h_table * cclasses = class->classes;
     h_merge(rclasses, cclasses);
     h_free(cclasses);
