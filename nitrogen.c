@@ -1547,6 +1547,15 @@ ary_add(ary_t * ary, void * obj, size_t size) {
 }
 
 void
+ary_pop(ary_t * ary, void * obj, size_t size) {
+  if (ary->len == 0) {
+    printf("ary is empty.\n");
+    exit(0);
+  }
+  memcpy(obj, ary->objs + size * --ary->len, size);
+}
+
+void
 ary_free(ary_t * ary) {
   free(ary->objs);
 }
@@ -1601,6 +1610,9 @@ ary_free(ary_t * ary) {
 
 #define exp_add(toks, tok) \
   ary_add(toks, tok, sizeof(exp_t *))
+
+#define exp_pop(toks, tok) \
+  ary_pop(toks, tok, sizeof(exp_t *))
 
 #define tok_new(toks) \
   ary_new(toks, 1, sizeof(tok_t))
@@ -2828,13 +2840,45 @@ class_fmeths(src_t * class) {
 }
 
 void
+class_fexp(cal_t * tok) {
+  ary_t exps[] = {0};
+  exp_new(exps, 1);
+  exp_add(exps, &tok);
+  while (exps->len > 0) {
+    exp_t * exp;
+    exp_pop(exps, &exp);
+    ary_free(&exp->args);
+    ary_free(&exp->yargs);
+    ary_t * toks = &exp->toks;
+    size_t j = 0;
+    for (; j < toks->len; j++) {
+      cal_t * tok = cal_get(toks, j);
+      def_t def = tok->self.def;
+      if (def == CMACRO) {
+        exp_add(exps, &tok);
+      } else {
+        free(tok);
+      }
+    }
+    ary_free(toks);
+    free(exp);
+  }
+  ary_free(exps);
+}
+
+void
 class_ftoks(src_t * src) {
   ary_t * toks = &src->toks;
   if (src->class.string) {
     size_t i = 0;
     for (; i < toks->len; i++) {
       cal_t * tok = cal_get(toks, i);
-      free(tok);
+      def_t def = tok->self.def;
+      if (def == CMACRO) {
+        class_fexp(tok);
+      } else {
+        free(tok);
+      }
     }
   }
   ary_free(toks);
@@ -2843,6 +2887,25 @@ class_ftoks(src_t * src) {
 void
 class_fimps(src_t * src) {
   ary_free(&src->imps);
+}
+
+void
+class_fmacs(src_t * src) {
+  ary_t * macs = &src->macs;
+  size_t i = 0;
+  for (; i < macs->len; i++) {
+    mac_t * mac = mac_get(macs, i);
+    ary_free(&mac->args);
+    ary_free(&mac->yargs);
+    ary_t * toks = &mac->toks;
+    size_t j = 0;
+    for (; j < toks->len; j++) {
+      cal_t * tok = cal_get(toks, j);
+      free(tok);
+    }
+    ary_free(toks);
+  }
+  ary_free(macs);
 }
 
 void
@@ -2860,6 +2923,7 @@ class_fclasses(cclass_t * class, h_table * fnames, utf_t * fname) {
     class_fstruct(src);
     class_fmeths(src);
     class_fimps(src);
+    class_fmacs(src);
     class_ftyps(src);
     free(src->cname);
     free(src->sname);
