@@ -2258,6 +2258,10 @@ cparse_src(cclass_t * class, scan_t * scan, tok_t * tok) {
       cparse_scall(src, scan, tok, &meth);
     } else if (parse_test(tok, CID)) {
       cparse_call(src, scan, tok);
+    } else if (parse_test(tok, CMUL)) {
+      tok_t next = parse_next(scan);
+      mac_add_cpy(&src->toks, tok);
+      mac_add_cpy(&src->toks, &next);
     } else if (parse_test(tok, CCALL)) {
       tok->def = CSEMCALL;
       cal_add_cpy(src, tok);
@@ -2276,6 +2280,10 @@ cparse_src(cclass_t * class, scan_t * scan, tok_t * tok) {
       declend = cparse_coms(src, scan, tok);
       continue;
     } else if (parse_test(tok, CDECLEND)) {
+      cal_add_cpy(src, tok);
+      declend = cparse_terms(src, scan, tok);
+      continue;
+    } else if (parse_test(tok, CTERM)) {
       cal_add_cpy(src, tok);
       declend = cparse_terms(src, scan, tok);
       continue;
